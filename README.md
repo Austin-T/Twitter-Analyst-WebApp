@@ -1,8 +1,9 @@
-# OctoProfile
+# Twitter Analyst Web App
 
-A nicer look at your GitHub Profile! With charts!
+This is a React web application that helps you understand how your audience on twitter is engaging with your ideas. Check out my 'Twitter Analyst API' repository
+to see the back-end magic that makes this application run.
 
-![demo](https://raw.githubusercontent.com/bchiang7/octoprofile/master/static/og.png)
+This application is based on Brittany Chiang's Octoprofile
 
 Built with:
 
