@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Octicon, { Repo, Star, RepoForked, TriangleDown } from '@primer/octicons-react';
 import FlipMove from 'react-flip-move';
-import { langColors } from '../utils';
+import { feedbackColors } from '../utils';
 import ReposStyles from './styles/ReposStyles';
 import DropdownStyles from './styles/DropdownStyles';
 import { Section } from '../style';
@@ -17,9 +17,9 @@ const Repos = ({ repoData }) => {
   const getTopRepos = type => {
     const LIMIT = 8;
     const map = {
-      likes: 'likes_count',
-      retweets: 'retweets_count',
-      comments: 'comments_count',
+      likes: 'likes',
+      retweets: 'retweets',
+      feedback: 'feedback',
     };
     const sortProperty = map[type];
     const sorted = repoData
@@ -45,15 +45,15 @@ const Repos = ({ repoData }) => {
     toggleDropdown();
   };
 
-  const sortTypes = ['likes', 'retweets', 'comments'];
+  const sortTypes = ['likes', 'retweets', 'feedback'];
 
   return (
     <Section>
       <ReposStyles>
         <header>
-          <h2>Top Tweets</h2>
+          <h2>Recent Tweets</h2>
           <div className="dropdown-wrapper">
-            <span className="label">by</span>
+            <span className="label">sorted by</span>
             <DropdownStyles active={dropdownOpen}>
               <button className="dropdown__button" onClick={() => toggleDropdown()}>
                 <label>{sortType}</label>
@@ -100,9 +100,9 @@ const Repos = ({ repoData }) => {
                         <span>
                           <div
                             className="language"
-                            style={{ backgroundColor: "#89e051" }}
+                            style={{ backgroundColor: feedbackColors[repo.feedback] }}
                           />
-                          feedback
+                          {repo.feedback}% Positive
                         </span>
                         <span>
                           <Octicon icon={Star} />

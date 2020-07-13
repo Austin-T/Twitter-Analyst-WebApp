@@ -2,6 +2,7 @@ import mockUserData from './mockUserData';
 import mockTweetData from './mockTweetData';
 import mockMetaData from './mockMetaData';
 import langColors from './langColors';
+import feedbackColors from './feedbackColors';
 import buildChart from './buildChart';
 
 const backgroundColor = [
@@ -26,6 +27,7 @@ export {
   mockTweetData,
   mockMetaData,
   langColors,
+  feedbackColors,
   backgroundColor,
   borderColor,
   buildChart,

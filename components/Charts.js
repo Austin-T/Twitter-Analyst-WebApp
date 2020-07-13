@@ -32,12 +32,12 @@ const Charts = ({ langData, repoData }) => {
   const initStarChart = () => {
     const ctx = document.getElementById('starChart');
     const LIMIT = 5;
-    const sortProperty = 'stargazers_count';
+    const sortProperty = 'likes';
     const mostStarredRepos = repoData
       .filter(repo => !repo.fork)
       .sort((a, b) => b[sortProperty] - a[sortProperty])
       .slice(0, LIMIT);
-    const labels = mostStarredRepos.map(repo => repo.name);
+    const labels = mostStarredRepos.map(repo => repo.date);
     const data = mostStarredRepos.map(repo => repo[sortProperty]);
 
     setStarChartData(data);
@@ -55,12 +55,12 @@ const Charts = ({ langData, repoData }) => {
   const [thirdChartData, setThirdChartData] = useState(null);
   const initThirdChart = () => {
     const ctx = document.getElementById('thirdChart');
-    const filteredRepos = repoData.filter(repo => !repo.fork && repo.stargazers_count > 0);
-    const uniqueLangs = new Set(filteredRepos.map(repo => repo.language));
+    const filteredRepos = repoData.filter(repo => !repo.fork && repo.likes > 0);
+    const uniqueLangs = new Set(filteredRepos.map(repo => repo.hashtag));
     const labels = Array.from(uniqueLangs.values()).filter(l => l);
     const data = labels.map(lang => {
-      const repos = filteredRepos.filter(repo => repo.language === lang);
-      const starsArr = repos.map(r => r.stargazers_count);
+      const repos = filteredRepos.filter(repo => repo.hashtag === lang);
+      const starsArr = repos.map(r => r.likes);
       const starSum = starsArr.reduce((a, b) => a + b, 0);
       return starSum;
     });
@@ -71,7 +71,7 @@ const Charts = ({ langData, repoData }) => {
       const chartType = 'doughnut';
       const axes = false;
       const legend = true;
-      const borderColor = labels.map(label => langColors[label]);
+      const borderColor = labels.map(label => langColors[label[1].toUpperCase()]);
       const backgroundColor = borderColor.map(color => `${color}B3`);
       const config = { ctx, chartType, labels, data, backgroundColor, borderColor, axes, legend };
       buildChart(config);
@@ -117,7 +117,7 @@ const Charts = ({ langData, repoData }) => {
 
         <div className="chart">
           <header>
-            <h2>Top Hashtags</h2>
+            <h2>Likes per Hashtag</h2>
           </header>
           <div className="chart-container">
             {thirdChartError && <p>Nothing to see here!</p>}

@@ -35,8 +35,8 @@ const Error = ({ error }) => (
   <ErrorStyles>
     <Head title="OctoProfile" />
     <Corner />
-    <Octicon icon={MarkGithub} size="large" />
-    <h1>OctoProfile</h1>
+    {/* <Octicon icon={MarkGithub} size="large" /> */}
+    <h1>Twitter Analyst</h1>
 
     {error && (
       <div>

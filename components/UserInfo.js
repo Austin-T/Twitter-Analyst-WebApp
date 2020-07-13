@@ -8,29 +8,29 @@ const UserInfo = ({ userData }) => (
   <Section dark>
     {userData && (
       <UserInfoStyles>
-        {userData.avatar_url && (
+        {userData.avatarURL && (
           <div className="avatar">
-            <img src={userData.avatar_url} alt="avatar" />
+            <img src={userData.avatarURL} alt="avatar" />
           </div>
         )}
 
         {userData.name && <h1>{userData.name}</h1>}
 
-        {userData.login && (
+        {userData.screenName && (
           <h2>
-            <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
-              @{userData.login}
+            <a href={userData.url} target="_blank" rel="noopener noreferrer">
+              @{userData.screenName}
             </a>
           </h2>
         )}
 
         <div className="info">
-          {userData.company && (
+          {/* {userData.company && (
             <span className="info__item">
               <Octicon icon={Briefcase} size="small" />
               {userData.company}
             </span>
-          )}
+          )} */}
 
           {userData.location && (
             <span className="info__item">
@@ -39,11 +39,11 @@ const UserInfo = ({ userData }) => (
             </span>
           )}
 
-          {userData.created_at && (
+          {userData.createdAt && (
             <span className="info__item">
               <Octicon icon={Calendar} size="small" />
               Joined{' '}
-              {new Date(userData.created_at).toLocaleDateString('en-US', {
+              {new Date(userData.createdAt).toLocaleDateString('en-US', {
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric',
@@ -54,16 +54,16 @@ const UserInfo = ({ userData }) => (
 
         <div className="stats">
           <div className="stats__item">
-            <span className="num">{userData.public_repos.toLocaleString()}</span>
+            <span className="num">{userData.tweetsCount.toLocaleString()}</span>
             <span className="num-label">Tweets</span>
           </div>
           <div className="stats__item">
-            <span className="num">{userData.followers.toLocaleString()}</span>
-            <span className="num-label">Likes</span>
+            <span className="num">{userData.followersCount.toLocaleString()}</span>
+            <span className="num-label">Followers</span>
           </div>
           <div className="stats__item">
-            <span className="num">{userData.following.toLocaleString()}</span>
-            <span className="num-label">Retweets</span>
+            <span className="num">{userData.followingCount.toLocaleString()}</span>
+            <span className="num-label">Following</span>
           </div>
         </div>
       </UserInfoStyles>

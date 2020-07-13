@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Head, UserInfo, Charts, Repos, Footer, Corner, Error, RateLimit } from '../components';
-import GhPolyglot from 'gh-polyglot';
-import { mockUserData, mockMetaData, mockTweetData } from '../utils'; // ----------------------------------------------Must remove later --------------------------------------
+// import GhPolyglot from 'gh-polyglot';
+// import { mockUserData, mockMetaData, mockTweetData } from '../utils'; // ----------------------------------------------Must remove later --------------------------------------
 
 const User = props => {
   const username = props.query.id;
@@ -13,7 +13,8 @@ const User = props => {
   const [rateLimit, setRateLimit] = useState(null);
 
   const getUserData = () => {
-    fetch(`https://api.github.com/users/${username}`)
+    // fetch(`https://api.github.com/users/${username}`)
+    fetch('http://127.0.0.1:5000/user-data/' + username)
       .then(response => {
         if (response.status === 404) {
           return setError({ active: true, type: 404 });
@@ -31,18 +32,34 @@ const User = props => {
   };
 
   const getLangData = () => {
-    const me = new GhPolyglot(`${username}`);
-    me.userStats((err, stats) => {
-      if (err) {
-        console.error('Error:', err);
-        setError({ active: true, type: 400 });
-      }
-      setLangData(stats);
-    });
+    // const me = new GhPolyglot(`${username}`);
+    // me.userStats((err, stats) => {
+    //   if (err) {
+    //     console.error('Error:', err);
+    //     setError({ active: true, type: 400 });
+    //   }
+    //   setLangData(stats);
+    // });
+    fetch('http://127.0.0.1:5000/user-stats/' + username)
+      .then(response => {
+        if (response.status === 404) {
+          return setError({ active: true, type: 404 });
+        }
+        if (response.status === 403) {
+          return setError({ active: true, type: 403 });
+        }
+        return response.json();
+      })
+      .then(json => setLangData(json))
+      .catch(error => {
+        setError({ active: true, type: 200 });
+        console.error('Error:', error);
+      });
   };
 
   const getRepoData = () => {
-    fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+    // fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+    fetch('http://127.0.0.1:5000/user-tweets/' + username)
       .then(response => {
         if (response.status === 404) {
           return setError({ active: true, type: 404 });
@@ -73,9 +90,9 @@ const User = props => {
     getLangData();
     getRepoData();
 
-    setUserData(mockUserData); // ----------------------------------------------------------------- Must remove later -----------------------------------------------
-    setLangData(mockMetaData);
-    setRepoData(mockTweetData);
+    // setUserData(mockUserData); // ----------------------------------------------------------------- Must remove later -----------------------------------------------
+    // setLangData(mockMetaData);
+    // setRepoData(mockTweetData);
   }, []);
 
   return (
