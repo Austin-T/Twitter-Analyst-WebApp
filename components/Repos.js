@@ -51,7 +51,7 @@ const Repos = ({ repoData }) => {
     <Section>
       <ReposStyles>
         <header>
-          <h2>Recent Tweets</h2>
+          <h2>Latest Tweets</h2>
           <div className="dropdown-wrapper">
             <span className="label">sorted by</span>
             <DropdownStyles active={dropdownOpen}>
