@@ -1,4 +1,5 @@
 const feedbackColors = {
+    999: '#a9a9a9',
     100: '#89e051',
     99: '#89e051',
     98: '#89e051',
@@ -99,7 +100,7 @@ const feedbackColors = {
     3: '#e34c26',
     2: '#e34c26',
     1: '#e34c26',
-    0: '#e34c26',
+    0: '#a9a9a9',
   };
   
   export default feedbackColors;

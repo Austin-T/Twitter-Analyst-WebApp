@@ -27,7 +27,7 @@ const Charts = ({ langData, repoData }) => {
     }
   };
 
-  // Create Most Starred chart
+  // Create Most Starred Hashtags chart
   const [starChartData, setStarChartData] = useState(null);
   const initStarChart = () => {
     const ctx = document.getElementById('starChart');
@@ -37,7 +37,7 @@ const Charts = ({ langData, repoData }) => {
       .filter(repo => !repo.fork)
       .sort((a, b) => b[sortProperty] - a[sortProperty])
       .slice(0, LIMIT);
-    const labels = mostStarredRepos.map(repo => repo.date);
+    const labels = mostStarredRepos.map(repo => repo.hashtag);
     const data = mostStarredRepos.map(repo => repo[sortProperty]);
 
     setStarChartData(data);
@@ -56,10 +56,10 @@ const Charts = ({ langData, repoData }) => {
   const initThirdChart = () => {
     const ctx = document.getElementById('thirdChart');
     const filteredRepos = repoData.filter(repo => !repo.fork && repo.likes > 0);
-    const uniqueLangs = new Set(filteredRepos.map(repo => repo.hashtag));
+    const uniqueLangs = new Set(filteredRepos.map(repo => repo.date));
     const labels = Array.from(uniqueLangs.values()).filter(l => l);
     const data = labels.map(lang => {
-      const repos = filteredRepos.filter(repo => repo.hashtag === lang);
+      const repos = filteredRepos.filter(repo => repo.date === lang);
       const starsArr = repos.map(r => r.likes);
       const starSum = starsArr.reduce((a, b) => a + b, 0);
       return starSum;
@@ -68,9 +68,9 @@ const Charts = ({ langData, repoData }) => {
     setThirdChartData(data);
 
     if (data.length > 0) {
-      const chartType = 'doughnut';
-      const axes = false;
-      const legend = true;
+      const chartType = 'line';
+      const axes = true;
+      const legend = false;
       const borderColor = labels.map(label => langColors[label[1].toUpperCase()]);
       const backgroundColor = borderColor.map(color => `${color}B3`);
       const config = { ctx, chartType, labels, data, backgroundColor, borderColor, axes, legend };
@@ -96,7 +96,7 @@ const Charts = ({ langData, repoData }) => {
       <ChartsStyles>
         <div className="chart">
           <header>
-            <h2>Consumer Interactions</h2>
+            <h2>Audience Sentiment</h2>
           </header>
 
           <div className="chart-container">
@@ -107,11 +107,11 @@ const Charts = ({ langData, repoData }) => {
 
         <div className="chart">
           <header>
-            <h2>Weekly Engagement</h2>
+            <h2>Daily Enagagement</h2>
           </header>
           <div className="chart-container">
-            {starChartError && <p>Nothing to see here!</p>}
-            <canvas id="starChart" width={chartSize} height={chartSize} />
+            {thirdChartError && <p>Nothing to see here!</p>}
+            <canvas id="thirdChart" width={chartSize} height={chartSize} />
           </div>
         </div>
 
@@ -120,10 +120,11 @@ const Charts = ({ langData, repoData }) => {
             <h2>Likes per Hashtag</h2>
           </header>
           <div className="chart-container">
-            {thirdChartError && <p>Nothing to see here!</p>}
-            <canvas id="thirdChart" width={chartSize} height={chartSize} />
+            {starChartError && <p>Nothing to see here!</p>}
+            <canvas id="starChart" width={chartSize} height={chartSize} />
           </div>
         </div>
+
       </ChartsStyles>
     </Section>
   );

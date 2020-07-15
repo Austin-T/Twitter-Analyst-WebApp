@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Octicon, { Repo, Star, RepoForked, TriangleDown } from '@primer/octicons-react';
+import Octicon, { Repo, Star, RepoForked, TriangleDown, Heart, Mention, Sync } from '@primer/octicons-react';
 import FlipMove from 'react-flip-move';
 import { feedbackColors } from '../utils';
 import ReposStyles from './styles/ReposStyles';
@@ -51,7 +51,7 @@ const Repos = ({ repoData }) => {
     <Section>
       <ReposStyles>
         <header>
-          <h2>Latest Tweets</h2>
+          <h2>Top Tweets</h2>
           <div className="dropdown-wrapper">
             <span className="label">sorted by</span>
             <DropdownStyles active={dropdownOpen}>
@@ -97,19 +97,19 @@ const Repos = ({ repoData }) => {
                     </div>
                     <div className="repo__stats">
                       <div className="repo__stats--left">
+                      <span>
+                        <div
+                          className="language"
+                          style={{ backgroundColor: feedbackColors[repo.feedback] }}
+                        />
+                        {repo.feedback}{repo.feedbackStr}
+                      </span>
                         <span>
-                          <div
-                            className="language"
-                            style={{ backgroundColor: feedbackColors[repo.feedback] }}
-                          />
-                          {repo.feedback}% Positive
-                        </span>
-                        <span>
-                          <Octicon icon={Star} />
+                          <Octicon icon={Heart} />
                           {repo.likes}
                         </span>
                         <span>
-                          <Octicon icon={RepoForked} />
+                          <Octicon icon={Sync} />
                           {repo.retweets}
                         </span>
                       </div>
@@ -119,7 +119,7 @@ const Repos = ({ repoData }) => {
               ))}
             </FlipMove>
           ) : (
-            <p>No available repositories!</p>
+            <p>No available tweets!</p>
           )}
         </div>
       </ReposStyles>
